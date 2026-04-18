@@ -5,26 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"path/filepath"
-	"strings"
 
 	"github.com/yuin/goldmark"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	wd, _ := os.Getwd()
-
-	var allFiles []string
-	filepath.Walk("/var/task", func(p string, info os.FileInfo, err error) error {
-		if err == nil {
-			allFiles = append(allFiles, p)
-		}
-		return nil
-	})
-
 	src, err := os.ReadFile("assets/hieu_profile.md")
 	if err != nil {
-		http.Error(w, fmt.Sprintf("wd=%s\nall files:\n%s\nerror: %s", wd, strings.Join(allFiles, "\n"), err), http.StatusInternalServerError)
+		http.Error(w, "could not read file: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
