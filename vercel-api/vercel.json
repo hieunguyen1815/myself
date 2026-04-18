@@ -1,0 +1,13 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "regions": [
+        "sin1"
+    ],
+    "functions": {
+        "api/resume.go": {
+            "memory": 512,
+            "maxDuration": 60,
+            "includeFiles": "assets/hieu_profile.md"
+        }
+    }
+}
