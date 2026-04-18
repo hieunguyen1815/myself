@@ -2,10 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "regions": ["sin1"],
   "functions": {
-    "api/*.go": {
+     "api/helloworld.go": {
       "memory": 512,
-      "maxDuration": 10,
-      "includeFiles": "api/assets/**"
+      "maxDuration": 10
     }
   }
 }
