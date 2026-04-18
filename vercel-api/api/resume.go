@@ -9,19 +9,19 @@ import (
 	"github.com/yuin/goldmark"
 )
 
+func Resume(w http.ResponseWriter, r *http.Request) {
+	path := os.Getenv("RESUME_PATH")
+	if path == "" {
+		path = "assets/hieu_profile.md"
+	}
+	handler := &ResumeHandler{filepath: path}
+	handler.serveMarkdown(w, r)
+}
+
 // Markdown serves a markdown file rendered as HTML at the root path.
 // It reads the file on every request so changes on disk are reflected immediately.
 type ResumeHandler struct {
 	filepath string
-}
-
-func Resume(w http.ResponseWriter, r *http.Request) {
-	path := os.Getenv("RESUME_PATH")
-	if path == "" {
-		path = "api/assets/hieu_profile.md"
-	}
-	handler := &ResumeHandler{filepath: path}
-	handler.serveMarkdown(w, r)
 }
 
 func (m *ResumeHandler) serveMarkdown(w http.ResponseWriter, r *http.Request) {
