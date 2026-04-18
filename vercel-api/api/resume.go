@@ -2,37 +2,19 @@ package handler
 
 import (
 	"bytes"
+	_ "embed"
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/yuin/goldmark"
 )
 
+//go:embed assets/hieu_profile.md
+var profileMarkdown []byte
+
 func Resume(w http.ResponseWriter, r *http.Request) {
-	path := os.Getenv("RESUME_PATH")
-	if path == "" {
-		path = "assets/hieu_profile.md"
-	}
-	handler := &ResumeHandler{filepath: path}
-	handler.serveMarkdown(w, r)
-}
-
-// Markdown serves a markdown file rendered as HTML at the root path.
-// It reads the file on every request so changes on disk are reflected immediately.
-type ResumeHandler struct {
-	filepath string
-}
-
-func (m *ResumeHandler) serveMarkdown(w http.ResponseWriter, r *http.Request) {
-	src, err := os.ReadFile(m.filepath)
-	if err != nil {
-		http.Error(w, "could not read file: "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-
 	var body bytes.Buffer
-	if err := goldmark.Convert(src, &body); err != nil {
+	if err := goldmark.Convert(profileMarkdown, &body); err != nil {
 		http.Error(w, "could not render markdown: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
