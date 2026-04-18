@@ -1,3 +1,3 @@
-module github.com/hieunguyen1815/myself/vercel-api/api
+module github.com/hieunguyen1815/vercel-api
 
-go 1.26.1
+go 1.26.2
