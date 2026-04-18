@@ -1,0 +1,19 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "rewrites": [
+        {
+            "source": "(.*)",
+            "destination": "api/index.go"
+        }
+    ],
+    "functions": {
+        "api/*.go": {
+            "memory": 512,
+            "maxDuration": 10,
+            "regions": [
+                "sin1"
+            ],
+            "includeFiles": "assets/**"
+        }
+    }
+}
