@@ -2,7 +2,6 @@ package handler
 
 import (
 	"bytes"
-	_ "embed"
 	"fmt"
 	"net/http"
 	"os"
@@ -11,7 +10,7 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	src, err := os.ReadFile("assets/hieu_profile.md")
+	src, err := os.ReadFile("api/assets/hieu_profile.md")
 	if err != nil {
 		http.Error(w, "could not read file: "+err.Error(), http.StatusInternalServerError)
 		return
