@@ -10,11 +10,19 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	wd, _ := os.Getwd()
+	entries, _ := os.ReadDir(".")
+
 	src, err := os.ReadFile("api/assets/hieu_profile.md")
 	if err != nil {
-		http.Error(w, "could not read file: "+err.Error(), http.StatusInternalServerError)
+		var listing string
+		for _, e := range entries {
+			listing += e.Name() + "\n"
+		}
+		http.Error(w, fmt.Sprintf("wd=%s\ndir listing:\n%s\nerror: %s", wd, listing, err), http.StatusInternalServerError)
 		return
 	}
+	_, _ = wd, entries
 
 	var body bytes.Buffer
 	if err := goldmark.Convert(src, &body); err != nil {
