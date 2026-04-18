@@ -7,25 +7,27 @@ import (
 	"github.com/gofiber/fiber/v3/middleware/adaptor"
 )
 
-// Handler is the main entry point of the application. Think of it like the main() method
-func Handler(w http.ResponseWriter, r *http.Request) {
-	// This is needed to set the proper request path in `fiber.Ctx`
-	r.RequestURI = r.URL.String()
+// app is initialised once at startup and reused across all requests.
+var app = buildApp()
 
-	handler().ServeHTTP(w, r)
-}
+func buildApp() *fiber.App {
+	a := fiber.New()
 
-// building the fiber application
-func handler() http.HandlerFunc {
-	app := fiber.New()
-
-	app.Get("/healthcheck", func(ctx fiber.Ctx) error {
+	a.Get("/healthcheck", func(ctx fiber.Ctx) error {
 		return ctx.JSON(fiber.Map{
 			"version": "v1",
 		})
 	})
 
-	app.Get("/api/resume/v1", adaptor.HTTPHandlerFunc(Resume))
+	a.Get("/api/resume/v1", adaptor.HTTPHandlerFunc(Resume))
 
-	return adaptor.FiberApp(app)
+	return a
+}
+
+// Handler is the Vercel serverless entrypoint.
+func Handler(w http.ResponseWriter, r *http.Request) {
+	// This is needed to set the proper request path in fiber.Ctx
+	r.RequestURI = r.URL.String()
+
+	adaptor.FiberApp(app).ServeHTTP(w, r)
 }
