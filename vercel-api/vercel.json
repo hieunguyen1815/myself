@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/*.go": {
+    "api/resume.go": {
       "memory": 512,
       "maxDuration": 10,
       "regions": ["sin1"],
