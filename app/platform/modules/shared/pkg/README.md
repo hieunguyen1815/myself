@@ -1,0 +1,1 @@
+shared pkgs across modules
