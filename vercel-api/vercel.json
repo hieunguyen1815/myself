@@ -7,7 +7,7 @@
         "api/resume.go": {
             "memory": 512,
             "maxDuration": 60,
-            "includeFiles": "api/assets/hieu_profile.md"
+            "includeFiles": "assets/hieu_profile.md"
         }
     }
 }

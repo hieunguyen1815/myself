@@ -5,24 +5,28 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/yuin/goldmark"
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	wd, _ := os.Getwd()
-	entries, _ := os.ReadDir(".")
 
-	src, err := os.ReadFile("api/assets/hieu_profile.md")
-	if err != nil {
-		var listing string
-		for _, e := range entries {
-			listing += e.Name() + "\n"
+	var allFiles []string
+	filepath.Walk("/var/task", func(p string, info os.FileInfo, err error) error {
+		if err == nil {
+			allFiles = append(allFiles, p)
 		}
-		http.Error(w, fmt.Sprintf("wd=%s\ndir listing:\n%s\nerror: %s", wd, listing, err), http.StatusInternalServerError)
+		return nil
+	})
+
+	src, err := os.ReadFile("assets/hieu_profile.md")
+	if err != nil {
+		http.Error(w, fmt.Sprintf("wd=%s\nall files:\n%s\nerror: %s", wd, strings.Join(allFiles, "\n"), err), http.StatusInternalServerError)
 		return
 	}
-	_, _ = wd, entries
 
 	var body bytes.Buffer
 	if err := goldmark.Convert(src, &body); err != nil {
