@@ -18,7 +18,7 @@ type ResumeHandler struct {
 func Resume(w http.ResponseWriter, r *http.Request) {
 	path := os.Getenv("RESUME_PATH")
 	if path == "" {
-		path = "assets/hieu_profile.md"
+		path = "api/assets/hieu_profile.md"
 	}
 	handler := &ResumeHandler{filepath: path}
 	handler.serveMarkdown(w, r)
