@@ -16,7 +16,7 @@
     },
     "rewrites": [
         {
-            "source": "/api/proxy/:path*",
+            "source": "/medium/:path*",
             "destination": "https://medium.com/:path*"
         }
     ]
