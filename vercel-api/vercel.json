@@ -8,6 +8,16 @@
             "memory": 512,
             "maxDuration": 60,
             "includeFiles": "assets/hieu_profile.md"
+        },
+        "api/proxy.go": {
+            "memory": 512,
+            "maxDuration": 60
         }
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/api/medium/:path*",
+            "destination": "https://medium.com/:path*"
+        }
+    ]
 }
