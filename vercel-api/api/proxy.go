@@ -13,6 +13,10 @@ func Proxy(w http.ResponseWriter, r *http.Request) {
 	// Vercel injects catch-all path segments as the "path" query param.
 	// e.g. /api/medium/foo/bar  ->  path=foo/bar
 	mediumPath := r.URL.Query().Get("path")
+	if mediumPath == "" {
+		http.Error(w, "missing 'path' query parameter", http.StatusBadRequest)
+		return
+	}
 
 	targetURL := mediumBase + "/" + mediumPath
 

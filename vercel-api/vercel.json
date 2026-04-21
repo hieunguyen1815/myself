@@ -16,8 +16,8 @@
     },
     "rewrites": [
         {
-            "source": "/api/proxy/:path",
-            "destination": "/api/proxy.go?path=:path"
+            "source": "/api/proxy/:path*",
+            "destination": "/api/proxy.go?path=:path*"
         }
     ]
 }
