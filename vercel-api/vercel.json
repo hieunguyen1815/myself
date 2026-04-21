@@ -16,7 +16,7 @@
     },
     "rewrites": [
         {
-            "source": "/medium/:path*",
+            "source": "/api/medium/:path*",
             "destination": "https://medium.com/:path*"
         }
     ]
